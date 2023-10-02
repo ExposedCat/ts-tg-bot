@@ -3,6 +3,7 @@
   "tabWidth": 2,
   "semi": false,
   "singleQuote": true,
+  // NOTE(DP): tabs nooooooo!
   "useTabs": true,
   "jsxSingleQuote": true,
   "bracketSpacing": true,

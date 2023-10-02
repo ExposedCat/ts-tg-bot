@@ -10,6 +10,7 @@ export interface Custom<C extends Context> {
 		extra?: Extra
 	) => ReturnType<C['reply']>
 
+	// NOTE(DP): too general naming... what about... no idea sorry, I'm tired :(
 	entities: {
 		user: User
 		chat: Chat | null

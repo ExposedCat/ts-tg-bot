@@ -5,13 +5,13 @@
   "main": "build/index.js",
   "scripts": {
     "compile": "tsc",
-    "prepare": "npm run compile && npm run copyFiles",
-    "bg:start": "npm run prepare && pm2 start build/index.js --name telegram-bot",
-    "bg:restart": "npm run prepare && pm2 restart telegram-bot",
+    "postcompile": "cp -r ./src/locales/ ./build/",
+    "bg:start": "npm run compile && pm2 start build/index.js --name telegram-bot",
+    "bg:restart": "npm run compile && pm2 restart telegram-bot",
     "bg:logs": "pm2 logs telegram-bot --lines 1000 -f",
-    "start": "npm run prepare && node .",
-    "pretty": "npx prettier --write src",
-    "copyFiles": "cp -r src/locales build"
+    "prestart": "npm run compile",
+    "start": "node .",
+    "lint": "npx prettier --write src"
   },
   "keywords": [
     "telegram",

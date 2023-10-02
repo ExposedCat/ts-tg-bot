@@ -1,4 +1,7 @@
 {
+	// NOTE(DP): As option, you can extend community driven configs
+	//           https://github.com/tsconfig/bases
+	//           PS. Yes, they have strict configurations as well
 	"compilerOptions": {
 		"target": "es2017",
 		"outDir": "./build",

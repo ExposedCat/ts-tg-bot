@@ -1,32 +1,32 @@
 import type { Chat, Database } from '../types/database.js'
 
+// NOTE(DP): dead code?
 export function buildName(firstName: string, lastName?: string) {
 	return lastName ? `${firstName} ${lastName}` : firstName
 }
 
-async function createChat(args: {
+interface CreateChatArgs {
 	db: Database
 	chatId: number
 	title: string
-}): Promise<Chat> {
-	const chatObject = {
-		chatId: args.chatId,
-		title: args.title
-	} as Chat
-
-	await args.db.chat.insertOne(chatObject)
-
-	return chatObject
 }
 
-export async function getOrCreateChat(args: {
-	db: Database
-	chatId: number
-	title: string
-}): Promise<Chat> {
-	const chat = await args.db.chat.findOneAndUpdate(
-		{ chatId: args.chatId },
-		{ $set: { title: args.title } },
+async function createChat({chatId, db, title}: CreateChatArgs): Promise<Chat> {
+	const newChat = {
+		chatId,
+		title
+	} as Chat
+
+	await db.chat.insertOne(newChat)
+
+	return newChat
+}
+
+export async function getOrCreateChat(createChatArgs: CreateChatArgs): Promise<Chat> {
+	const {chatId, db, title} = createChatArgs;
+	const chat = await db.chat.findOneAndUpdate(
+		{ chatId },
+		{ $set: { title } },
 		{ returnDocument: 'after' }
 	)
 
@@ -34,5 +34,5 @@ export async function getOrCreateChat(args: {
 		return chat.value
 	}
 
-	return createChat(args)
+	return createChat(createChatArgs)
 }

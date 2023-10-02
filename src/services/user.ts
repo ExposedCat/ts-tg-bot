@@ -4,29 +4,29 @@ export function buildName(firstName: string, lastName?: string) {
 	return lastName ? `${firstName} ${lastName}` : firstName
 }
 
-async function createPlayer(args: {
+interface CreateUserArgs {
 	db: Database
 	userId: number
 	name: string
-}): Promise<User> {
-	const playerObject = {
-		userId: args.userId,
-		name: args.name
-	} as User
-
-	await args.db.user.insertOne(playerObject)
-
-	return playerObject
 }
 
-export async function getOrCreatePlayer(args: {
-	db: Database
-	userId: number
-	name: string
-}): Promise<User> {
-	const user = await args.db.user.findOneAndUpdate(
-		{ userId: args.userId },
-		{ $set: { name: args.name } },
+// NOTE(DP): always use the same terminology: user for all users, not player
+async function createUser({userId, db, name}: CreateUserArgs): Promise<User> {
+	const newUser = {
+		userId,
+		name
+	} as User
+
+	await db.user.insertOne(newUser)
+
+	return newUser
+}
+
+export async function getOrCreatePlayer(createUserArgs: CreateUserArgs): Promise<User> {
+	const {userId, db, name} = createUserArgs;
+	const user = await db.user.findOneAndUpdate(
+		{ userId },
+		{ $set: { name } },
 		{ returnDocument: 'after' }
 	)
 
@@ -34,5 +34,5 @@ export async function getOrCreatePlayer(args: {
 		return user.value
 	}
 
-	return createPlayer(args)
+	return createUser(createUserArgs)
 }
