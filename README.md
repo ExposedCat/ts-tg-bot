@@ -1,1 +1,0 @@
-# Monsters of Chopa Sipa
