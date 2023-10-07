@@ -4,19 +4,19 @@ export function buildName(firstName: string, lastName?: string) {
 	return lastName ? `${firstName} ${lastName}` : firstName
 }
 
-async function createPlayer(args: {
+async function createUser(args: {
 	db: Database
 	userId: number
 	name: string
 }): Promise<User> {
-	const playerObject = {
+	const userObject = {
 		userId: args.userId,
 		name: args.name
 	} as User
 
-	await args.db.user.insertOne(playerObject)
+	await args.db.user.insertOne(userObject)
 
-	return playerObject
+	return userObject
 }
 
 export async function getOrCreatePlayer(args: {
@@ -34,5 +34,5 @@ export async function getOrCreatePlayer(args: {
 		return user.value
 	}
 
-	return createPlayer(args)
+	return createUser(args)
 }
