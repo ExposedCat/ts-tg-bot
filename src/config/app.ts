@@ -1,3 +1,4 @@
+// TODO: Use path aliases
 import { loadEnv } from '../helpers/load-env.js'
 import { validateEnv } from '../helpers/validate-env.js'
 import { startBot } from './bot.js'

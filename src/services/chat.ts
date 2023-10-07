@@ -1,9 +1,5 @@
 import type { Chat, Database } from '../types/database.js'
 
-export function buildName(firstName: string, lastName?: string) {
-	return lastName ? `${firstName} ${lastName}` : firstName
-}
-
 async function createChat(args: {
 	db: Database
 	chatId: number

@@ -1,5 +1,6 @@
 import type { I18n } from '@grammyjs/i18n/dist/source/i18n.js'
 import { Bot as TelegramBot, session } from 'grammy'
+
 import { resolvePath } from '../helpers/resolve-path.js'
 import { createReplyWithTextFunc } from '../services/context.js'
 import type { CustomContext } from '../types/context.js'
@@ -60,6 +61,9 @@ export async function startBot(database: Database) {
 	extendContext(bot, database)
 	setupMiddlewares(bot, i18n)
 	setupControllers(bot)
+
+	// NOTE: Resolves only when bot is stopped
+	// so give it a second to start instead of `await`
 	bot.start()
 	return new Promise(resolve => setTimeout(resolve, 1_000))
 }
