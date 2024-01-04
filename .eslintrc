@@ -3,7 +3,6 @@
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "prettier",
-    "react",
     "import",
     "@typescript-eslint",
     "github",
