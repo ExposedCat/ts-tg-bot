@@ -1,5 +1,5 @@
 {
-  "name": "ts-tg-bot",
+  "name": "propertygram-telegram-bot",
   "version": "1.0.0",
   "description": "Telegram bot template in TypeScript ",
   "main": "build/index.js",
