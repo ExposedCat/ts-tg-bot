@@ -1,9 +1,9 @@
 {
-	// TODO: Extend some of https://github.com/tsconfig/bases
+	"extends": "@tsconfig/recommended/tsconfig.json",
 	"compilerOptions": {
-		"target": "es2017",
+		"target": "ESNext",
 		"outDir": "./build",
-		"module": "es2022",
+		"module": "ESNext",
 		"strict": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
