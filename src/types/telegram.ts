@@ -1,4 +1,4 @@
-import type { Api, Bot as TelegramBot, NextFunction } from 'grammy';
+import type { Api, NextFunction, Bot as TelegramBot } from 'grammy';
 
 import type { CustomContext } from './context.js';
 
