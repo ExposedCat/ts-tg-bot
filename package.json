@@ -4,14 +4,10 @@
   "description": "Telegram bot template in TypeScript ",
   "main": "build/index.js",
   "scripts": {
-    "compile": "tsc",
-    "postcompile": "cp -r src/locales build",
-    "bg:start": "npm run prepare && pm2 start build/index.js --name telegram-bot",
-    "bg:restart": "npm run prepare && pm2 restart telegram-bot",
-    "bg:logs": "pm2 logs telegram-bot --lines 1000 -f",
-    "start": "npm run compile && node .",
-    "lint": "npx biome check src/ --write",
-    "format": "npx biome format src/ --write"
+    "build": "tsc",
+    "postbuild": "cp -r src/locales build",
+    "start": "npm run build && node .",
+    "format": "npx @biomejs/biome lint src/ --write; npx @biomejs/biome format src/ --write"
   },
   "keywords": [
     "telegram",

@@ -1,0 +1,7 @@
+STRICTLY FOLLOW THESE INSTRUCTIONS:
+- Always write production-grade code 
+- Always use `type` instead of `interface`
+- Never write any comments
+- Never create .md files unless explicitly requested to
+- Never bloat README with too many technical details, keep it concise and simple
+- Never create `index.ts` files
