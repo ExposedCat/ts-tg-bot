@@ -1,6 +1,6 @@
 import { Composer } from "grammy";
 
-import type { CustomContext } from "../../bot/types/telegram.js";
+import type { CustomContext } from "../../bot/types/telegram.ts";
 
 export const chatController = new Composer<CustomContext>();
 

@@ -1,11 +1,11 @@
-import type { I18n } from "@grammyjs/i18n/dist/source/i18n.js";
-import { Bot as TelegramBot, session } from "grammy";
+import type { I18n } from "@grammyjs/i18n";
+import { type MiddlewareObj, session, Bot as TelegramBot } from "grammy";
 
-import { chatController } from "../../chat/controllers/chat.controller.js";
-import { upsertChat } from "../../chat/repositories/chat.repository.js";
-import type { Database } from "../../database/types/database.js";
-import type { Bot, CustomContext } from "../types/telegram.js";
-import { createReplyWithTextFunc } from "../utils/context.utils.js";
+import { chatController } from "../../chat/controllers/chat.controller.ts";
+import { upsertChat } from "../../chat/repositories/chat.repository.ts";
+import type { Database } from "../../database/types/database.ts";
+import type { Bot, CustomContext } from "../types/telegram.ts";
+import { createReplyWithTextFunc } from "../utils/context.utils.ts";
 
 function extendContext(bot: Bot, database: Database) {
 	bot.use(async (ctx, next) => {
@@ -37,7 +37,7 @@ function setupPreControllers(_bot: Bot) {
 
 function setupMiddlewares(bot: Bot, i18n: I18n) {
 	bot.use(session({ initial: () => ({}) }));
-	bot.use(i18n.middleware());
+	bot.use(i18n as unknown as MiddlewareObj<CustomContext>);
 }
 
 function setupControllers(bot: Bot) {
@@ -45,11 +45,12 @@ function setupControllers(bot: Bot) {
 }
 
 export function createBot(database: Database, i18n: I18n): Bot {
-	if (!process.env.TOKEN) {
+	const TOKEN = Deno.env.get("TOKEN");
+	if (!TOKEN) {
 		throw new Error("TOKEN environment variable is missing");
 	}
 
-	const bot = new TelegramBot<CustomContext>(process.env.TOKEN);
+	const bot = new TelegramBot<CustomContext>(TOKEN);
 
 	setupPreControllers(bot);
 	extendContext(bot, database);

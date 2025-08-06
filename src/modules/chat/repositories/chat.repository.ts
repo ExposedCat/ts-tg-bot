@@ -1,4 +1,4 @@
-import type { Chat, Database } from "../../database/types/database.js";
+import type { Chat, Database } from "../../database/types/database.ts";
 
 type UpsertChatParams = {
 	db: Database;
@@ -17,9 +17,9 @@ export async function upsertChat({
 		{ returnDocument: "after", upsert: true },
 	);
 
-	if (!chat.ok || !chat.value) {
+	if (!chat) {
 		throw new Error("Failed to upsert chat");
 	}
 
-	return chat.value;
+	return chat;
 }

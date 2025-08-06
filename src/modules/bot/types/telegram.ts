@@ -1,4 +1,4 @@
-import type { I18nContextFlavor, TemplateData } from "@grammyjs/i18n";
+import type { I18nFlavor, TranslationVariables } from "@grammyjs/i18n";
 import type {
 	Api,
 	Context,
@@ -6,32 +6,26 @@ import type {
 	SessionFlavor,
 	Bot as TelegramBot,
 } from "grammy";
+import type { Message } from "grammy_types";
+import type { Chat, Database } from "../../database/types/database.ts";
 
-import type { Chat, Database } from "../../database/types/database.js";
+type Extra = Parameters<Api["sendMessage"]>[2];
 
-export type Extra = Parameters<Api["sendMessage"]>[2];
-
-export interface Custom<C extends Context> {
+export type Custom = {
 	text: (
 		text: string,
-		templateData?: TemplateData,
+		templateData?: TranslationVariables,
 		extra?: Extra,
-	) => ReturnType<C["reply"]>;
+	) => Promise<Message.TextMessage>;
 
 	dbEntities: {
 		chat: Chat;
 	};
 
 	db: Database;
-}
+};
 
-export type CustomContextMethods = Custom<Context>;
-
-export type CustomContext = Context &
-	Custom<Context> &
-	I18nContextFlavor &
-	// biome-ignore lint/complexity/noBannedTypes: empty
-	SessionFlavor<{}>;
+export type CustomContext = Context & Custom & I18nFlavor & SessionFlavor<{}>;
 
 export type Bot = TelegramBot<CustomContext>;
 

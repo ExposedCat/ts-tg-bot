@@ -1,16 +1,15 @@
-import { loadEnv, resolvePath, validateEnv } from "../../../utils/env.utils.js";
-import { createBot } from "../../bot/config/bot.config.js";
-import { connectToDb } from "../../database/config/connection.js";
-import { initLocaleEngine } from "../../locale/config/locale.config.js";
-import type { Database } from "../../database/types/database.js";
+import { resolvePath, validateEnv } from "../../../utils/env.utils.ts";
+import { createBot } from "../../bot/config/bot.config.ts";
+import { connectToDb } from "../../database/config/connection.ts";
+import type { Database } from "../../database/types/database.ts";
+import { initLocaleEngine } from "../../locale/config/locale.config.ts";
 
 export async function startApp() {
 	try {
-		loadEnv("../../.env");
 		validateEnv(["TOKEN", "DB_CONNECTION_STRING"]);
 	} catch (error) {
 		console.error("Error occurred while loading environment:", error);
-		process.exit(1);
+		Deno.exit(1);
 	}
 
 	let database: Database;
@@ -18,7 +17,7 @@ export async function startApp() {
 		database = await connectToDb();
 	} catch (error) {
 		console.error("Error occurred while connecting to the database:", error);
-		process.exit(2);
+		Deno.exit(2);
 	}
 
 	try {
@@ -33,6 +32,6 @@ export async function startApp() {
 		);
 	} catch (error) {
 		console.error("Error occurred while starting the bot:", error);
-		process.exit(3);
+		Deno.exit(3);
 	}
 }
